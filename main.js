@@ -1,112 +1,116 @@
-const caixaPrincipal = document.querySelector(".caixa-principal");
 const caixaPerguntas = document.querySelector(".caixa-perguntas");
 const caixaAlternativas = document.querySelector(".caixa-alternativas");
-const caixaResultado = document.querySelector(".caixa-resultado");
 const textoResultado = document.querySelector(".texto-resultado");
 
 const perguntas = [
-    {
-        enunciado: "Quando você começa um novo projeto de programação, qual é a sua abordagem inicial?",
-        alternativas: [
-            {
-                texto: "Gosto de planejar detalhadamente antes de começar a codificar.",
-                afirmacao: "<b>Organização</b> é uma característica forte sua, valorizando o planejamento detalhado."
-            },
-            {
-                texto: "Prefiro começar a codificar logo e ajustar o plano conforme avanço.",
-                afirmacao: "Você se destaca pela <b>dinamismo</b>, gostando de aprender e ajustar durante o processo."
-            }
-        ]
-    },
-    {
-        enunciado: "Como você lida com problemas ou bugs no seu código?",
-        alternativas: [
-            {
-                texto: "Gosto de resolver os problemas sozinho, pesquisando e testando diferentes soluções.",
-                afirmacao: "Independência define sua abordagem para resolver problemas, confiando nas suas <b>habilidades de pesquisa</b>."
-            },
-            {
-                texto: "Prefiro pedir ajuda a colegas ou em fóruns de programação quando encontro dificuldades.",
-                afirmacao: "Colaboração é essencial para você, apreciando a <b>troca de conhecimento</b> com outros programadores."
-            }
-        ]
-    },
-    {
-        enunciado: "Qual é a sua preferência em relação à estética versus funcionalidade em um projeto?",
-        alternativas: [
-            {
-                texto: "Acredito que a funcionalidade é mais importante que a estética.",
-                afirmacao: "<b>Pragmatismo</b> é uma característica sua, priorizando a funcionalidade e a eficiência do código."
-            },
-            {
-                texto: "Valorizo muito a estética e gosto de criar interfaces visualmente atraentes.",
-                afirmacao: "<b>Detalhista</b>, você dá muita importância à aparência e à experiência do usuário."
-            }
-        ]
-    },
-    {
-        enunciado: "Qual é a sua postura em relação ao aprendizado de novas tecnologias?",
-        alternativas: [
-            {
-                texto: "Prefiro me aprofundar nas tecnologias que já conheço bem antes de explorar novas.",
-                afirmacao: "<b>Foco</b> é seu ponto forte, preferindo dominar suas ferramentas atuais."
-            },
-            {
-                texto: "Gosto de experimentar e aprender novas tecnologias constantemente.",
-                afirmacao: "<b>Curiosidade</b> é uma marca sua, sempre em busca de novas ferramentas e técnicas."
-            }
-        ]
-    },
-    {
-        enunciado: "Como você prefere trabalhar em um projeto?",
-        alternativas: [
-            {
-                texto: "Prefiro trabalhar sozinho, tendo total controle sobre o projeto.",
-                afirmacao: "<b>Independência</b> é uma preferência sua, gostando de ter controle total sobre seus projetos."
-            },
-            {
-                texto: "Gosto de trabalhar em equipe, colaborando e compartilhando responsabilidades.",
-                afirmacao: "<b>Trabalho em equipe</b> é algo que você valoriza, apreciando a colaboração e a partilha de responsabilidades."
-            }
-        ]
-    }
+  {
+    enunciado: `Assim que saiu da escola você se depara com uma nova tecnologia, um chat que consegue responder dúvidas e gerar imagens e áudios hiper-realistas. Qual o primeiro pensamento?`,
+    alternativas: [
+      {
+        texto: "Isso é assustador!",
+        afirmacao: "No início, ficou com medo do que essa tecnologia pode fazer."
+      },
+      {
+        texto: "Isso é maravilhoso!",
+        afirmacao: "Quis saber como usar a IA no seu dia a dia."
+      }
+    ]
+  },
+  {
+    enunciado: `Uma professora pede que você escreva um trabalho sobre o uso de IA em sala de aula. Qual atitude você toma?`,
+    alternativas: [
+      {
+        texto: "Utiliza uma ferramenta de busca com IA para encontrar informações e facilitar o entendimento.",
+        afirmacao: "Utilizou a IA como ferramenta de pesquisa e apoio à aprendizagem."
+      },
+      {
+        texto: "Escreve com base em conversas, pesquisas na internet e conhecimentos próprios.",
+        afirmacao: "Preferiu construir o trabalho com suas próprias pesquisas e conhecimentos."
+      }
+    ]
+  },
+  {
+    enunciado: `Em um debate sobre como a IA impacta o trabalho do futuro, como você se posiciona?`,
+    alternativas: [
+      {
+        texto: "A IA pode criar oportunidades de emprego e melhorar habilidades humanas.",
+        afirmacao: "Acredita que a IA pode criar oportunidades e transformar o mundo do trabalho."
+      },
+      {
+        texto: "É importante proteger os trabalhadores que podem perder seus empregos para máquinas.",
+        afirmacao: "Defende que os impactos da IA sobre os trabalhadores precisam ser considerados."
+      }
+    ]
+  },
+  {
+    enunciado: `Você precisa criar uma imagem no computador que represente o que pensa sobre IA. O que faz?`,
+    alternativas: [
+      {
+        texto: "Cria uma imagem usando uma plataforma de design, como o Paint.",
+        afirmacao: "Preferiu criar sua imagem utilizando ferramentas tradicionais de desenho."
+      },
+      {
+        texto: "Cria uma imagem utilizando um gerador de imagens por IA.",
+        afirmacao: "Experimentou a IA como ferramenta de criação visual."
+      }
+    ]
+  },
+  {
+    enunciado: `Em um trabalho em grupo, um colega utiliza um texto gerado por IA sem revisá-lo. O que você faz?`,
+    alternativas: [
+      {
+        texto: "Considera que utilizar o texto inteiro já é uma contribuição.",
+        afirmacao: "Precisa refletir sobre a importância da autoria e da revisão dos conteúdos gerados por IA."
+      },
+      {
+        texto: "Revisa o texto e acrescenta as perspectivas e contribuições do grupo.",
+        afirmacao: "Reconhece que a IA pode errar e que a revisão crítica e a contribuição humana são essenciais."
+      }
+    ]
+  }
 ];
 
 let atual = 0;
-let perguntaAtual;
 let historiaFinal = "";
 
-function mostraPergunta(){
-    if(atual >= perguntas.length){
-        mostraResultado();
-        return;
-    }
-    perguntaAtual = perguntas[atual];
-    caixaPerguntas.textContent = perguntaAtual.enunciado;
-    caixaAlternativas.textContent = "";
-    mostraAlternativas();
+function mostraPergunta() {
+  if (atual >= perguntas.length) {
+    mostraResultado();
+    return;
+  }
+
+  const perguntaAtual = perguntas[atual];
+
+  caixaPerguntas.textContent = perguntaAtual.enunciado;
+  caixaAlternativas.textContent = "";
+
+  mostraAlternativas(perguntaAtual);
 }
 
-function mostraAlternativas(){
-    for(const alternativa of perguntaAtual.alternativas){
-        const botaoAlternativas = document.createElement("button");
-        botaoAlternativas.textContent = alternativa.texto;
-        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
-        caixaAlternativas.appendChild(botaoAlternativas)
-    }
+function mostraAlternativas(perguntaAtual) {
+  for (const alternativa of perguntaAtual.alternativas) {
+    const botaoAlternativa = document.createElement("button");
+
+    botaoAlternativa.textContent = alternativa.texto;
+
+    botaoAlternativa.addEventListener("click", () => {
+      respostaSelecionada(alternativa);
+    });
+
+    caixaAlternativas.appendChild(botaoAlternativa);
+  }
 }
 
-function respostaSelecionada(opcaoSelecionada){
-    const afirmacoes = opcaoSelecionada.afirmacao;
-    historiaFinal += afirmacoes + " ";
-    atual++;
-    mostraPergunta();
+function respostaSelecionada(alternativa) {
+  historiaFinal += alternativa.afirmacao + " ";
+  atual++;
+  mostraPergunta();
 }
 
-function mostraResultado(){
-    caixaPerguntas.textContent = "Olha só o que podemos afirmar sobre você...";
-    textoResultado.innerHTML = historiaFinal;
-    caixaAlternativas.innerHTML = "";
+function mostraResultado() {
+  caixaPerguntas.textContent = "Em 2049...";
+  textoResultado.textContent = historiaFinal;
+  caixaAlternativas.textContent = "";
 }
 
-mostraPergunta(); 
+mostraPergunta();
